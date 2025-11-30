@@ -41,10 +41,10 @@ echo "postgres" > secrets/postgres_password.txt (Пароль можно зам�
 так как формирует строку подключения `POSTGRES_DSN` динамически при старте, читая пароль
 из того же Docker secret. Пароль не хранится в открытом виде в `docker-compose.yml`.)
 
-openssl req -x509 -nodes -days 365 \
-  -newkey rsa:2048 \
-  -keyout secrets/nginx.key \
-  -out certs/nginx.crt \
+openssl req -x509 -nodes -days 365 \\
+  -newkey rsa:2048 \\
+  -keyout secrets/nginx.key \\
+  -out certs/nginx.crt \\
   -subj "/CN=localhost"
 
 cd gitlab
@@ -114,3 +114,4 @@ curl -k -I -L https://localhost:8443
 
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
+
