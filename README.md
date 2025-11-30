@@ -100,7 +100,7 @@ docker exec -it bdcrud-postgres-1 \
 контейнер PostgreSQL читает пароль через переменную POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password;
 контейнер приложения также получает этот секрет и формирует строку подключения POSTGRES_DSN внутри entrypoint-скрипта, а не из открытого текста в docker-compose.yml.
 
-### 2.1. GitLab
+### 2.2. GitLab
 
 Развёртывание GitLab выполняется из каталога gitlab/:
 ```bash
@@ -108,7 +108,7 @@ cd gitlab
 
 docker compose up -d
 ```
-###5 минут можно попить чай###
+####5 минут можно попить чай
 
 ------------------------------
 ```bash
@@ -123,6 +123,7 @@ curl -k -I -L https://localhost:8443
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
 ```
+
 
 
 
