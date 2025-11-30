@@ -41,21 +41,23 @@ echo "postgres" > secrets/postgres_password.txt (Пароль можно зам�
 так как формирует строку подключения `POSTGRES_DSN` динамически при старте, читая пароль
 из того же Docker secret. Пароль не хранится в открытом виде в `docker-compose.yml`.)
 
-openssl req -x509 -nodes -days 365 /\
-  -newkey rsa:2048 /\
-  -keyout secrets/nginx.key /\
-  -out certs/nginx.crt /\
+```bash
+openssl req -x509 -nodes -days 365 \
+  -newkey rsa:2048 \
+  -keyout secrets/nginx.key \
+  -out certs/nginx.crt \
   -subj "/CN=localhost"
 
 cd gitlab
 
 mkdir -p certs secrets
 
-openssl req -x509 -nodes -days 365  /\
-  -newkey rsa:2048 /\
-  -keyout secrets/gitlab_ssl.key /\
-  -out certs/localhost.crt /\
+openssl req -x509 -nodes -days 365  \
+  -newkey rsa:2048 \
+  -keyout secrets/gitlab_ssl.key \
+  -out certs/localhost.crt \
   -subj "/CN=localhost"
+```
 
 echo "GitLabRoot123" > secrets/gitlab_root_password.txt (пароль можно сменить, но значение берётся GitLab только при первом запуске, далее пароль хранится во внутренней БД GitLab.)
 
@@ -78,7 +80,7 @@ docker compose ps
 
 API приложения доступен через HTTPS за nginx по адресу:
 https://localhost/products
-
+```bash
 curl -k -X POST https://localhost/products \
   -H "Content-Type: application/json" \
   -d '{"name":"TestBD","description":"from_lab_test","price":222.0,"qty":333,"category":"lab"}'
@@ -88,7 +90,7 @@ curl -k https://localhost/products | grep TestBD
 docker exec -it bdcrud-postgres-1 \
   psql -U postgres -d postgres \
   -c "SELECT id, name, price, qty, category FROM products WHERE name LIKE 'CheckItem%';"
-
+```
 секрет описан в docker-compose.yml:
 ./secrets/postgres_password.txt;
 контейнер PostgreSQL читает пароль через переменную POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password;
@@ -114,6 +116,7 @@ curl -k -I -L https://localhost:8443
 
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
+
 
 
 
