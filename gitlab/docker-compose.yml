@@ -1,0 +1,30 @@
+#version: "3.9"                           # Версия
+
+services:
+  gitlab:                                # Сервис GitLab CE 
+    image: gitlab/gitlab-ce:latest       # Официальный образ GitLab
+    hostname: localhost                  # Внутренний hostname контейнера 
+    ports:
+      - "8443:443"                       # Проброс HTTPS - https://localhost:8443->443
+      - "8081:80"                        # Проброс HTTP - http://localhost:8081->80
+    volumes:
+      - ./config:/etc/gitlab             # Каталог с конфигурацией GitLab 
+      - ./logs:/var/log/gitlab           # Логи GitLab 
+      - ./data:/var/opt/gitlab           # Данные GitLab
+      - ./certs:/etc/gitlab/ssl:ro       # Папка с публичным сертификатом localhost.crt
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |           # Встроенная конфигурация Omnibus GitLab 
+        external_url "https://localhost" # Внешний URL GitLab, используется в ссылках и настройке nginx внутри
+        nginx['redirect_http_to_https'] = true                  # Редирект всех HTTP-запросов на HTTPS
+        nginx['ssl_certificate'] = "/etc/gitlab/ssl/localhost.crt"    # Путь к публичному сертификату для HTTPS
+        nginx['ssl_certificate_key'] = "/run/secrets/gitlab_ssl_key"  # Путь к приватному ключу TLS из Docker secret
+        gitlab_rails['initial_root_password'] = File.read("/run/secrets/gitlab_root_password").strip   # Начальный пароль пользователя root читается из секрета (файл в /run/secrets)
+    secrets:
+      - gitlab_ssl_key                   # Docker secret с TLS-ключом GitLab
+      - gitlab_root_password             # Docker secret с учётными данными root
+
+secrets:
+  gitlab_ssl_key:                        # Определение секрета с ключом TLS
+    file: ./secrets/gitlab_ssl.key       # Файл на хосте, из которого читается ключ 
+  gitlab_root_password:                  # Определение секрета с паролем root GitLab
+    file: ./secrets/gitlab_root_password.txt  # Файл на хосте с паролем 

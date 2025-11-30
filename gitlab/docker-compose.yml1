@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest        # GitLab Community Edition
+    hostname: localhost                   # Внутренний hostname = localhost
+    ports:
+      - "8443:443"                        # HTTPS снаружи: https://localhost:8443
+      - "8081:80"                         # HTTP для отладки (редиректит на HTTPS)
+    volumes:
+      - ./config:/etc/gitlab              # Конфигурация GitLab
+      - ./logs:/var/log/gitlab            # Логи GitLab
+      - ./data:/var/opt/gitlab            # Данные GitLab
+      - ./certs:/etc/gitlab/ssl:ro        # Наши сертификаты: localhost.crt/localhost.key
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url "https://localhost"                      # Для GitLab внешний URL = https://localhost
+        nginx['redirect_http_to_https'] = true                # Редирект с HTTP на HTTPS
+        nginx['ssl_certificate'] = "/etc/gitlab/ssl/localhost.crt"     # Путь к нашему сертификату
+        nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/localhost.key" # Путь к приватному ключу
+
