@@ -1,6 +1,10 @@
 # Лабораторная: развёртывание REST API приложения в Docker (app + PostgreSQL + MongoDB + nginx + GitLab)
 
 ## 1. Структура проекта
+```
+git clone https://github.com/JellySheep/BDcrud2.git
+mv BDcrud2 BDcrud
+```
 
 Корень проекта (`BDcrud/`):
 
@@ -89,7 +93,7 @@ curl -k https://localhost/products | grep TestBD
 
 docker exec -it bdcrud-postgres-1 \
   psql -U postgres -d postgres \
-  -c "SELECT id, name, price, qty, category FROM products WHERE name LIKE 'CheckItem%';"
+  -c "SELECT id, name, price, qty, category FROM products;"
 ```
 секрет описан в docker-compose.yml:
 ./secrets/postgres_password.txt;
@@ -119,6 +123,7 @@ curl -k -I -L https://localhost:8443
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
 ```
+
 
 
 
