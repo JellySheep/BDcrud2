@@ -33,9 +33,9 @@
 
 ## 2. Подготовка секретов и сертификатов
 Работа в корне проекта - BDcrud
-
+```bash
 mkdir -p secrets certs
-
+```
 echo "postgres" > secrets/postgres_password.txt (Пароль можно заменить на любой. При первом запуске PostgreSQL инициализирует базу,
 читая пароль из Docker secret `postgres_password.txt`. Приложение также использует этот же пароль,
 так как формирует строку подключения `POSTGRES_DSN` динамически при старте, читая пароль
@@ -62,9 +62,9 @@ openssl req -x509 -nodes -days 365  \
 echo "GitLabRoot123" > secrets/gitlab_root_password.txt (пароль можно сменить, но значение берётся GitLab только при первом запуске, далее пароль хранится во внутренней БД GitLab.)
 
 Сертификаты и пароли готовы, для проверки работы БД нужно вернуться в BDcrud 
-
+```bash
 cd ..
-
+```
 ### 2.1. приложение + nginx + PostgreSQL (БД можно выбрать, пароля на монге нет)
 По умолчанию приложение использует PostgreSQL как основное хранилище.
 Выбор хранилища управляется переменной окружения STORAGE:
@@ -73,11 +73,11 @@ STORAGE=mongo – использовать MongoDB;
 STORAGE=memory – использовать встроенное in-memory-хранилище.
 Пример запуска с MongoDB:
 STORAGE=mongo docker compose up -d --build
-
+```bash
 docker compose up -d --build
 
 docker compose ps
-
+```
 API приложения доступен через HTTPS за nginx по адресу:
 https://localhost/products
 ```bash
@@ -99,13 +99,15 @@ docker exec -it bdcrud-postgres-1 \
 ### 2.1. GitLab
 
 Развёртывание GitLab выполняется из каталога gitlab/:
+```bash
 cd gitlab
 
 docker compose up -d
-
+```
 ###5 минут можно попить чай###
 
 ------------------------------
+```bash
 docker ps
 
 Проверка HTTP-доступа (ожидается редирект на HTTPS):
@@ -116,6 +118,7 @@ curl -k -I -L https://localhost:8443
 
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
+```
 
 
 
