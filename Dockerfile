@@ -19,7 +19,7 @@ ENV STORAGE=memory
 # Docker-контейнер слушает 8000 порт
 EXPOSE 8000
 
-#Копируем entrypoint внутрь образа
+#Копируем entrypoint-скрипт внутрь образа для корректной работы секрета БД постгрес
 COPY app/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
