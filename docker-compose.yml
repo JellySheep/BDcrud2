@@ -11,9 +11,9 @@ services:
       MONGO_DSN: "mongodb://mongo:27017"           # Строка подключения к MongoDB
       MONGO_DB: "testdb"                           # Имя БД в Mongo
       MONGO_COLL: "products"                       # Коллекция Mongo для хранения товаров
-      POSTGRES_USER: "postgres"          # Пользователь PostgreSQL (для сборки DSN в entrypoint)
+      POSTGRES_USER: "postgres"          # Пользователь PostgreSQL для сборки DSN в entrypoint
       POSTGRES_DB: "postgres"            # Имя БД PostgreSQL
-      POSTGRES_HOST: "postgres"          # Хост PostgreSQL (имя сервиса)
+      POSTGRES_HOST: "postgres"          # Хост PostgreSQL - имя сервиса
       POSTGRES_PORT: "5432"              # Порт PostgreSQL
     depends_on:
       - postgres                        # Подождать поднятия PostgreSQL перед стартом
@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000"                     # Проброс порта приложения на хост localhost:8000
     secrets:
-      - postgres_password
+      - postgres_password               #Добавляем секрет для корректной работы скрипты
 
   postgres:                             # Сервис PostgreSQL
     image: postgres:16                  # Официальный образ PostgreSQL 
