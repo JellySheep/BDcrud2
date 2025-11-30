@@ -19,5 +19,11 @@ ENV STORAGE=memory
 # Docker-контейнер слушает 8000 порт
 EXPOSE 8000
 
+#Копируем entrypoint внутрь образа
+COPY app/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Сначала выполняется entrypoint, потом CMD
+ENTRYPOINT ["/entrypoint.sh"]
 # Команда, которую контейнер запускает по умолчанию
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
