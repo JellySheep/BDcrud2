@@ -51,10 +51,10 @@ cd gitlab
 
 mkdir -p certs secrets
 
-openssl req -x509 -nodes -days 365 \
-  -newkey rsa:2048 \
-  -keyout secrets/gitlab_ssl.key \
-  -out certs/localhost.crt \
+openssl req -x509 -nodes -days 365  /\
+  -newkey rsa:2048 /\
+  -keyout secrets/gitlab_ssl.key /\
+  -out certs/localhost.crt /\
   -subj "/CN=localhost"
 
 echo "GitLabRoot123" > secrets/gitlab_root_password.txt (пароль можно сменить, но значение берётся GitLab только при первом запуске, далее пароль хранится во внутренней БД GitLab.)
@@ -114,4 +114,5 @@ curl -k -I -L https://localhost:8443
 
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
+
 
