@@ -108,7 +108,7 @@ cd gitlab
 
 docker compose up -d
 ```
-####5 минут можно попить чай
+#### 5 минут можно попить чай
 
 ------------------------------
 ```bash
@@ -123,6 +123,7 @@ curl -k -I -L https://localhost:8443
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443
 ```
+
 
 
 
