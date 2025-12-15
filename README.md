@@ -121,8 +121,9 @@ curl -I http://localhost:8081
 curl -k -I -L https://localhost:8443
 
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
-curl -k -I -L https://localhost:8443
+curl -k -I -L https://localhost:8443/users/sign_in
 ```
+
 
 
 
