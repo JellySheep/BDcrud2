@@ -63,7 +63,7 @@ openssl req -x509 -nodes -days 365  \
   -subj "/CN=localhost"
 ```
 
-``` echo "GitLabRoot123" > secrets/gitlab_root_password.txt ``` (пароль можно сменить, но значение берётся GitLab только при первом запуске, далее пароль хранится во внутренней БД GitLab.)
+``` echo "GitLabRoot123" > secrets/gitlab_root_password.txt ``` (пароль НУЖНО сменить, т.к. базовые механизмы проверки гитлаба не пропустят стартовый слабы пароль при запуске контейнера, но значение берётся GitLab только при первом запуске, далее пароль хранится во внутренней БД GitLab.)
 
 Сертификаты и пароли готовы, для проверки работы БД нужно вернуться в BDcrud 
 ```bash
@@ -123,6 +123,7 @@ curl -k -I -L https://localhost:8443
 Ожидается статус 200 OK главной страницы GitLab по HTTPS.
 curl -k -I -L https://localhost:8443/users/sign_in
 ```
+
 
 
 
